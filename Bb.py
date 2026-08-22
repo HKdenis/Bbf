@@ -967,7 +967,7 @@ elif selection == "New Transaction Entry":
                     # Google Sheets Column Mapping Array
                     rows_to_append.append([
                         tx_date.strftime("%Y-%m-%d"),       # Col A: Date
-                        business_name_sel,                  # Col B: Business Name
+                        #business_name_sel,                  # Col B: Business Name
                         global_tx_type,                     # Col C: Transaction Type
                         item_part,                          # Col D: Particulars
                         qty,                                # Col E: Quantity
