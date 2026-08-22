@@ -9,7 +9,7 @@ import altair as alt
 
 # --- 0. INITIAL CONFIGURATION ---
 # Streamlit requires set_page_config to be the very first Streamlit command executed!
-st.set_page_config(page_title="Pauliz PUB & Joint System", layout="wide")
+st.set_page_config(page_title="Bbwenda System", layout="wide")
 
 # Initialize session state for login status
 if "logged_in" not in st.session_state:
@@ -72,7 +72,7 @@ def login():
     # Render HTML Card structure snippet wrapper
     st.markdown("""
         <div class="login-container">
-            <div class="login-title">Pauliz P&J</div>
+            <div class="login-title">Bbwenda Designers</div>
             <div class="login-subtitle">Please enter your password to access the system</div>
         </div>
     """, unsafe_allow_html=True)
@@ -172,8 +172,8 @@ def get_google_sheet_workbook(workbook_name):
             st.stop()
 
 # --- 3. INSTANTIATE WORKBOOK AND WORKSHEETS ---
-client, sheet = get_google_sheet_workbook("Lnbuss")
-nedin_ent_sheet = sheet.worksheet("LNenterprise")
+client, sheet = get_google_sheet_workbook("Bbwenda")
+nedin_ent_sheet = sheet.worksheet("bb")
 
 # --- 4. DYNAMIC DATA FETCHING (CACHED) ---
 @st.cache_data(ttl=600)  # Caches the parsed data list for 10 minutes
@@ -210,14 +210,14 @@ if st.sidebar.button("🚪 Log Out the System Account", use_container_width=Fals
 # --- PAGE 1: HOME ---
 if selection == "Home":
     st.write(
-        '<p style="font-family: Consolas; color: #42c8f5; font-size: 60px; font-weight: bold; text-align: center; margin-bottom: 20px;">Pauliz Pub&Joint System</p>',
+        '<p style="font-family: Consolas; color: #42c8f5; font-size: 60px; font-weight: bold; text-align: center; margin-bottom: 20px;">Bbwenda Designers</p>',
         unsafe_allow_html=True,
     )
 
     # 1. Google Sheets Connection
     try:
-        client, sheet = get_google_sheet_workbook("Lnbuss")
-        financial_sheet = sheet.worksheet("LNenterprise")
+        client, sheet = get_google_sheet_workbook("Bbwenda")
+        financial_sheet = sheet.worksheet("bb")
         data = financial_sheet.get_all_records()
         df = pd.DataFrame(data)
     except NameError:
@@ -230,8 +230,8 @@ if selection == "Home":
         creds = Credentials.from_service_account_info(service_account_info, scopes=scope)
         client = gspread.authorize(creds)
         
-        sheet = client.open("Lnbuss")
-        financial_sheet = sheet.worksheet("LNenterprise")
+        sheet = client.open("Bbwenda")
+        financial_sheet = sheet.worksheet("bb")
         data = financial_sheet.get_all_records()
         df = pd.DataFrame(data)
 
@@ -672,7 +672,7 @@ elif selection == "New Transaction Entry":
     if "editor_session_id" not in st.session_state:
         st.session_state.editor_session_id = 0
 
-    BUSINESS_NAME = ["--Select Name--", "Pauliz pub", "Pauliz Joint"]
+    #BUSINESS_NAME = ["--Select Name--", "Pauliz pub", "Pauliz Joint"]
     TRANSACTION_OPTIONS = [
         "--Select Transaction--",
         "Sales",
@@ -690,7 +690,7 @@ elif selection == "New Transaction Entry":
     st.sidebar.caption("Manage items in your Particulars_Prices tab.")
 
     try:
-        spreadsheet = client.open("Lnbuss")
+        spreadsheet = client.open("Bbwenda")
         try:
             lookup_worksheet = spreadsheet.worksheet("Particulars&Prices")
         except Exception:
@@ -792,16 +792,16 @@ elif selection == "New Transaction Entry":
     available_items = ["--Select Item--"] + sorted(list(PARTICULARS_MAP.keys()))
 
     # --- 1. BATCH CONFIGURATION LINE ---
-    col_d1, col_d2, col_d3 = st.columns(3)
+    col_d1, col_d2 = st.columns(2)
     with col_d1:
         tx_date = st.date_input("Transaction Date", datetime.date.today())
+    #with col_d2:
+        #business_name_sel = st.selectbox(
+            #"Business Name", 
+            #BUSINESS_NAME, 
+            #key=f"bs_name_{st.session_state.editor_session_id}"
+        #)
     with col_d2:
-        business_name_sel = st.selectbox(
-            "Business Name", 
-            BUSINESS_NAME, 
-            key=f"bs_name_{st.session_state.editor_session_id}"
-        )
-    with col_d3:
         global_tx_type = st.selectbox(
             "Transaction Type", 
             TRANSACTION_OPTIONS, 
@@ -922,9 +922,9 @@ elif selection == "New Transaction Entry":
 
     # --- 4 & 5. SUBMIT & POST TO GOOGLE SHEETS PIPELINE ---   
     if st.button("Save All Transactions", type="primary"):
-        if business_name_sel == "--Select Name--":
-            st.error("❌ Please select a valid Business Name at the top dropdown before saving.")
-        elif global_tx_type == "--Select Transaction--":
+        #if business_name_sel == "--Select Name--":
+            #st.error("❌ Please select a valid Business Name at the top dropdown before saving.")
+        if global_tx_type == "--Select Transaction--":
             st.error("❌ Please select a valid Transaction Type at the top dropdown.")
         else:
             has_errors = False
@@ -988,12 +988,12 @@ elif selection == "New Transaction Entry":
             if not has_errors and len(rows_to_append) > 0:
                 with st.spinner("⏳ Safely writing batch to Google Sheets..."):
                     try:
-                        enterprise_worksheet = spreadsheet.worksheet("LNenterprise")
+                        enterprise_worksheet = spreadsheet.worksheet("bb")
                         enterprise_worksheet.append_rows(rows_to_append)
                     
                         markdown_table = (
-                            f"### 📋 Pauliz P&J Receipt\n"
-                            f"**Date:** {tx_date.strftime('%Y-%m-%d')} | **Business Name:** {business_name_sel} | **Type:** {global_tx_type}\n\n"
+                            f"### 📋 Bbwenda Designers Receipt\n"
+                            f"**Date:** {tx_date.strftime('%Y-%m-%d')} | **Type:** {global_tx_type}\n\n"
                             f"| Particulars | Qty | Unit Price | Total Amount | Contact | Description / Notes |\n"
                             f"| :--- | :---: | :--- | :--- | :--- | :--- |\n"
                         ) + "\n".join(summary_rows_markdown) + f"\n\n**Total Amount:** Ugx {int(live_total_amount):,}"
@@ -1027,7 +1027,7 @@ elif selection == "View Particular List":
     
     # 1. Google Sheets Connection
     try:
-        client, sheet = get_google_sheet_workbook("Lnbuss")
+        client, sheet = get_google_sheet_workbook("Bbwenda")
         financial_sheet = sheet.worksheet("Particulars&Prices")
         data = financial_sheet.get_all_records()
         df = pd.DataFrame(data)
@@ -1041,7 +1041,7 @@ elif selection == "View Particular List":
         creds = Credentials.from_service_account_info(service_account_info, scopes=scope)
         client = gspread.authorize(creds)
         
-        sheet = client.open("NeDin")
+        sheet = client.open("Bbwenda")
         financial_sheet = sheet.worksheet("Particulars&Prices")
         data = financial_sheet.get_all_records()
         df = pd.DataFrame(data)
