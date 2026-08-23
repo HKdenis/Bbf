@@ -63,7 +63,7 @@ def login():
     # Render HTML Card structure snippet wrapper
     st.markdown("""
         <div class="login-container">
-            <div class="login-title">Bbwenda Designers</div>
+            <div class="login-title">Bbwenda Fashion & Designer</div>
             <div class="login-subtitle">*Alert!* System access to only Authorised Individuals</div>
         </div>
     """, unsafe_allow_html=True)
