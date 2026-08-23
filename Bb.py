@@ -69,7 +69,7 @@ def login():
     """, unsafe_allow_html=True)
 
     # Use a neat vertical column centering trick for the interactive widget element
-    col1, col2, col3 = st.columns([1, 2, 1])
+    col1, col2, col3 = st.columns([1, 2.5, 1])
     with col2:
         with st.form("login_form", clear_on_submit=False):
             # 1. Added a unique 'key' to the text input
