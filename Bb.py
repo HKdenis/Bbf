@@ -9,7 +9,7 @@ import altair as alt
 
 # --- 0. INITIAL CONFIGURATION ---
 # Streamlit requires set_page_config to be the very first Streamlit command executed!
-st.set_page_config(page_title="Pauliz PUB & Joint", layout="wide")
+st.set_page_config(page_title="Bbwenda Fasion and Designers", layout="wide")
 
 # Initialize session state for login status
 if "logged_in" not in st.session_state:
@@ -63,7 +63,7 @@ def login():
     # Render HTML Card structure snippet wrapper
     st.markdown("""
         <div class="login-container">
-            <div class="login-title">Pauliz Business</div>
+            <div class="login-title">Bbwenda Designers</div>
             <div class="login-subtitle">*Alert!* System access to only Authorised Individuals</div>
         </div>
     """, unsafe_allow_html=True)
@@ -177,8 +177,8 @@ def get_google_sheet_workbook(workbook_name):
             st.stop()
 
 # --- 3. INSTANTIATE WORKBOOK AND WORKSHEETS ---
-client, sheet = get_google_sheet_workbook("Lnbuss")
-nedin_ent_sheet = sheet.worksheet("LNenterprise")
+client, sheet = get_google_sheet_workbook("Bbwenda")
+nedin_ent_sheet = sheet.worksheet("bb")
 
 # --- 4. DYNAMIC DATA FETCHING (CACHED) ---
 @st.cache_data(ttl=600)  # Caches the parsed data list for 10 minutes
@@ -202,7 +202,7 @@ def get_Particulars():
 
 # --- SIDEBAR NAVIGATION ---
 st.sidebar.write(
-        '<p style="font-family: Consolas; color: #4e6291; font-size: 20px; font-weight: bold; text-align: Left; margin-bottom: 20px;">🎯 Pauliz P&J System</p>',
+        '<p style="font-family: Consolas; color: #4e6291; font-size: 20px; font-weight: bold; text-align: Left; margin-bottom: 20px;">BBWENDA FASHION &DESIGN</p>',
         unsafe_allow_html=True,
     )
 selection = st.sidebar.radio(
