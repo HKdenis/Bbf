@@ -46,7 +46,7 @@ def login():
         .login-title {
             font-family: 'Consolas', sans-serif;
             color: #42c8f5;
-            font-size: 42px;
+            font-size: 30px;
             font-weight: 800;
             margin-bottom: 5px;
             letter-spacing: 1px;
