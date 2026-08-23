@@ -26,7 +26,7 @@ def login():
         
         /* Centered background container */
         .login-container {
-            max-width: 600px;
+            max-width: 800px;
             margin: 80px auto 20px auto;
             background: #ffffff;
             padding: 40px;
