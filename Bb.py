@@ -54,7 +54,7 @@ def login():
         
         .login-subtitle {
             color: #718096;
-            font-size: 16px;
+            font-size: 14px;
             margin-bottom: 30px;
         }
         </style>
