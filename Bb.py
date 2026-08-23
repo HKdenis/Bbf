@@ -9,7 +9,7 @@ import altair as alt
 
 # --- 0. INITIAL CONFIGURATION ---
 # Streamlit requires set_page_config to be the very first Streamlit command executed!
-st.set_page_config(page_title="Bbwenda System", layout="wide")
+st.set_page_config(page_title="Pauliz PUB & Joint", layout="wide")
 
 # Initialize session state for login status
 if "logged_in" not in st.session_state:
@@ -44,7 +44,7 @@ def login():
         }
         
         .login-title {
-            font-family: 'Agency FB', sans-serif;
+            font-family: 'Consolas', sans-serif;
             color: #42c8f5;
             font-size: 42px;
             font-weight: 800;
@@ -57,23 +57,14 @@ def login():
             font-size: 14px;
             margin-bottom: 30px;
         }
-        
-        /* Style the input form label inside the card */
-        .login-card-label {
-            text-align: left;
-            font-weight: 600;
-            color: #4a5568;
-            margin-bottom: 8px;
-            font-size: 14px;
-        }
         </style>
     """, unsafe_allow_html=True)
 
     # Render HTML Card structure snippet wrapper
     st.markdown("""
         <div class="login-container">
-            <div class="login-title">Bbwenda Designers</div>
-            <div class="login-subtitle">Please enter your password to access the system</div>
+            <div class="login-title">Pauliz Business</div>
+            <div class="login-subtitle">*Alert!* System access to only Authorised Individuals</div>
         </div>
     """, unsafe_allow_html=True)
 
@@ -81,12 +72,27 @@ def login():
     col1, col2, col3 = st.columns([1, 1.4, 1])
     with col2:
         with st.form("login_form", clear_on_submit=False):
-            password_input = st.text_input("Enter system Password", type="password", help="Enter authorization key", icon=":material/lock:")
+            # 1. Added a unique 'key' to the text input
+            password_input = st.text_input(
+                "Enter system Password", 
+                type="password", 
+                help="Enter authorization key", 
+                icon=":material/lock:",
+                key="password_field" 
+            )
             submit_button = st.form_submit_button("Verify password and Login", use_container_width=False)
-            
+    
             if submit_button:
-                if password_input == st.secrets.get("nedin", "123"):
+                # Secure lookup from the passwords section
+                system_password = st.secrets.get("passwords", {}).get("nedin")
+        
+                if system_password and password_input == system_password:
                     st.session_state.logged_in = True
+                
+                    # 2. Clear the password text field from session state
+                    if "password_field" in st.session_state:
+                        del st.session_state["password_field"]
+                
                     st.success("Access Granted! Loading system...")
                     st.rerun()
                 else:
@@ -96,7 +102,6 @@ def login():
 if not st.session_state.logged_in:
     login()
     st.stop() # Stops execution here so unauthenticated users see absolutely nothing else below
-
 
 # --- 1. APP WORKSPACE CUSTOM GLOBAL STYLING ---
 st.markdown("""
@@ -140,7 +145,7 @@ st.markdown("""
 
 # Standard modern API scope list
 SCOPE = [
-    'https://www.googleapis.com/auth/spreadsheets',
+    'https://googleapis.com',
     'https://www.googleapis.com/auth/drive'
 ]
 
@@ -172,8 +177,8 @@ def get_google_sheet_workbook(workbook_name):
             st.stop()
 
 # --- 3. INSTANTIATE WORKBOOK AND WORKSHEETS ---
-client, sheet = get_google_sheet_workbook("Bbwenda")
-nedin_ent_sheet = sheet.worksheet("bb")
+client, sheet = get_google_sheet_workbook("Lnbuss")
+nedin_ent_sheet = sheet.worksheet("LNenterprise")
 
 # --- 4. DYNAMIC DATA FETCHING (CACHED) ---
 @st.cache_data(ttl=600)  # Caches the parsed data list for 10 minutes
@@ -196,9 +201,12 @@ def get_Particulars():
 
 
 # --- SIDEBAR NAVIGATION ---
-st.sidebar.title("🎯 Navigation")
+st.sidebar.write(
+        '<p style="font-family: Consolas; color: #4e6291; font-size: 20px; font-weight: bold; text-align: Left; margin-bottom: 20px;">🎯 Pauliz P&J System</p>',
+        unsafe_allow_html=True,
+    )
 selection = st.sidebar.radio(
-    "Go to page:", ["Home","New Transaction Entry", "View Particular List"]
+    "Go to page:", ["Home","New Transaction Entry", "Price List"]
 )
 
 # Add a logout action cleanly inside the bottom of your sidebar panel
@@ -207,12 +215,14 @@ if st.sidebar.button("🚪 Log Out the System Account", use_container_width=Fals
     st.session_state.logged_in = False
     st.rerun()
 
-# --- PAGE 1: HOME ---
+# --- MAIN PAGE ROUTING CONTENT ---
+st.subheader(f"📍 {selection}")
 if selection == "Home":
     st.write(
-        '<p style="font-family: Consolas; color: #42c8f5; font-size: 60px; font-weight: bold; text-align: center; margin-bottom: 20px;">Bbwenda Designers</p>',
+        '<p style="font-family: Consolas; color: #4e6291; font-size: 15px; font-weight: bold; text-align: Left; margin-bottom: 20px;">Navigate Core business Updates</p>',
         unsafe_allow_html=True,
     )
+
 
     # 1. Google Sheets Connection
     try:
