@@ -202,7 +202,7 @@ def get_Particulars():
 
 # --- SIDEBAR NAVIGATION ---
 st.sidebar.write(
-        '<p style="font-family: Consolas; color: #4e6291; font-size: 20px; font-weight: bold; text-align: Left; margin-bottom: 20px;">BBWENDA FASHION &DESIGN</p>',
+        '<p style="font-family: Consolas; color: #4e6291; font-size: 20px; font-weight: bold; text-align: Left; margin-bottom: 20px;">BBWENDA FASHION&DESIGN</p>',
         unsafe_allow_html=True,
     )
 selection = st.sidebar.radio(
