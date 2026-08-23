@@ -671,9 +671,9 @@ elif selection == "New Transaction Entry":
     )
     
     st.write(
-            '<p style="font-family: Consolas; color: #695e82; font-size: 35px; font-weight: bold; text-align: center; margin-bottom: 20px;">TRANSACTION ENTRY FORM</p>',
-            unsafe_allow_html=True,
-        )
+        '<p style="font-family: Consolas; color: #4e6291; font-size: 15px; font-weight: bold; text-align: Left; margin-bottom: 20px;">Record Sales, Purchases, Expenses and stock</p>',
+        unsafe_allow_html=True,
+    )
     # --- 0. INITIALIZATION & SESSION STATES ---
     if "last_saved_summary" not in st.session_state:
         st.session_state.last_saved_summary = None
@@ -1032,9 +1032,11 @@ elif selection == "New Transaction Entry":
                 st.rerun()
 
 # --- PAGE 2: REPORTS ---       
-elif selection == "View Particular List":
-    st.title("Price List")
-    
+elif selection == "Price List":
+    st.write(
+        '<p style="font-family: Consolas; color: #4e6291; font-size: 15px; font-weight: bold; text-align: Left; margin-bottom: 20px;">Review the Prices and costs of each Item/good</p>',
+        unsafe_allow_html=True,
+    )
     # 1. Google Sheets Connection
     try:
         client, sheet = get_google_sheet_workbook("Bbwenda")
