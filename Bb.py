@@ -178,7 +178,7 @@ def get_google_sheet_workbook(workbook_name):
 
 # --- 3. INSTANTIATE WORKBOOK AND WORKSHEETS ---
 client, sheet = get_google_sheet_workbook("Bbwenda")
-nedin_ent_sheet = sheet.worksheet("bb")
+bb_sheet = sheet.worksheet("bb")
 
 # --- 4. DYNAMIC DATA FETCHING (CACHED) ---
 @st.cache_data(ttl=600)  # Caches the parsed data list for 10 minutes
